@@ -1,0 +1,18 @@
+.composerAttachments {
+  display: flex;
+  flex: 0 0 100%;
+  gap: px-to-rem(12);
+  margin-bottom: 0;
+  min-width: 0;
+  order: -2;
+  overscroll-behavior-x: contain;
+  overflow-x: auto;
+  padding: px-to-rem(1) px-to-rem(2) px-to-rem(2);
+  scrollbar-width: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.composerAttachments::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,144 @@
+@import "../../components/RecordingMicrophone/recording-microphone";
+
+// Keep visual changes in sync with the legacy Chat composer deliberately.
+.composer {
+  align-items: flex-end;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 28px;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, .05);
+  box-sizing: border-box;
+  display: flex;
+  height: 56px;
+  min-width: 0;
+  padding: 12px;
+  transition: min-height .22s cubic-bezier(.22, 1, .36, 1), border-radius .22s cubic-bezier(.22, 1, .36, 1);
+}
+// Keep React focus and layout in sync when WebView delays :focus-within.
+.composerWithText, .composerWithReferences, .composer:is(:focus-within, .composerFocused) {
+  align-content: space-between;
+  border-radius: 24px;
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 84px;
+}
+.composerWithAttachments, .composerWithAttachments:is(:focus-within, .composerFocused) {
+  align-content: flex-start;
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 190px;
+}
+.composerEntry { flex: 1; min-width: 0; position: relative; }
+.composerReferences { order: -2; flex: 0 0 100%; min-width: 0; max-height: 120px; overflow-y: auto; margin-bottom: 6px; }
+.composerWithReferences .composerEntry { flex: 0 0 100%; order: -1; }
+.composerWithText .composerEntry, .composer:is(:focus-within, .composerFocused) .composerEntry, .composerWithAttachments .composerEntry { flex: 0 0 100%; order: -1; }
+.composer .composerInput {
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: rgba(0, 0, 0, .5);
+  font-size: 15px;
+  height: 24px;
+  line-height: 19px;
+  margin: 0 8px 4px;
+  outline: 0;
+  overflow: hidden;
+  padding: 2px 0 0;
+  resize: none;
+  text-overflow: ellipsis;
+  transition: height .22s cubic-bezier(.22, 1, .36, 1);
+  white-space: nowrap;
+  width: calc(100% - 16px);
+}
+.composer .composerInput:focus-visible { outline: 0; }
+.composer .composerPressTarget {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  background: #fff;
+  border: 0;
+  color: rgba(0, 0, 0, .5);
+  font-size: 14px;
+  height: 100%;
+  inset: 0;
+  overflow: hidden;
+  padding: 0 8px;
+  position: absolute;
+  text-align: left;
+  text-overflow: ellipsis;
+  touch-action: none;
+  user-select: none;
+  white-space: nowrap;
+  width: 100%;
+}
+.composerPressTarget[hidden] { display: none; }
+.composerWithAttachments .composerPressTarget { height: 28px; line-height: 26px; padding: 2px 0 0; }
+.composerWithText .composerInput, .composerWithReferences .composerInput, .composer:is(:focus-within, .composerFocused) .composerInput, .composerWithAttachments .composerInput {
+  -webkit-user-select: text;
+  color: #000;
+  font-size: 17px;
+  line-height: 26px;
+  margin: 0 0 12px;
+  max-height: 84px;
+  min-height: 28px;
+  overflow-y: auto;
+  text-overflow: clip;
+  touch-action: auto;
+  user-select: text;
+  white-space: pre-wrap;
+  width: 100%;
+}
+.composerWithAttachments .composerInput { margin-bottom: 22px; }
+.composerInput::placeholder { color: rgba(0, 0, 0, .5); opacity: 1; font-size: 14px; }
+.composer .composerButton {
+  align-items: center;
+  background: rgba(118, 118, 128, .12);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 32px;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  touch-action: none;
+  width: 32px;
+}
+.composerButton img { display: block; max-height: 20px; max-width: 20px; }
+.composerVoiceIcon { -webkit-touch-callout: none; user-select: none; }
+.composerVoiceIcon img { -webkit-user-drag: none; user-select: none; }
+.composerButton:disabled, .composerButton[aria-disabled="true"] { cursor: default; opacity: .45; }
+.composerButton + .composerButton { margin-left: 16px; }
+.composerWithText .composerVoiceIcon, .composerWithReferences .composerVoiceIcon, .composerWithAttachments .composerVoiceIcon, .composer:is(:focus-within, .composerFocused) .composerVoiceIcon { margin-left: auto; }
+.composer .composerSendButton {
+  background: #c8c8cb;
+  flex-basis: 0;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: scale(.85);
+  transition: background-color .16s ease, flex-basis .22s ease, margin-left .22s ease, opacity .16s ease, transform .22s ease;
+  width: 0;
+}
+.composerWithText .composerSendButton, .composerWithAttachments .composerSendButton, .composer:is(:focus-within, .composerFocused) .composerSendButton, .composer .composerSendButtonActive {
+  flex-basis: 32px;
+  margin-left: 16px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  width: 32px;
+}
+.composer .composerSendButtonActive { background: #000; }
+.composer.composerWithoutVoice .composerSendButton { margin-left: auto; }
+.composerSendButton:disabled { pointer-events: none; }
+.composer .composerStopButton { background: #000; margin-left: 16px; }
+.composerStopIcon { background: #fff; border-radius: 5px; height: 14px; width: 14px; }
+.composerVoiceIcon[aria-pressed="true"] {
+  background: transparent;
+  isolation: isolate;
+  position: relative;
+}
+@include recording-microphone-indicator;
+@media (prefers-reduced-motion: reduce) { .composer, .composerInput, .composerSendButton { transition: none; } }

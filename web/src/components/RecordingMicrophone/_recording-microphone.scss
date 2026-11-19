@@ -1,0 +1,28 @@
+@mixin recording-microphone-indicator {
+  .microphoneHalo {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: rgba(126, 88, 233, .2);
+    pointer-events: none;
+  }
+  .microphoneBreathing { animation: microphoneBreathe 1.6s ease-in-out infinite; }
+  .composer .microphoneGlyph {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    max-width: none;
+    max-height: none;
+    transform: translate(-50%, -50%);
+    // Keep the center artwork stationary; only the halo breathes.
+    clip-path: circle(16px at center);
+    pointer-events: none;
+  }
+  @keyframes microphoneBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  @media (prefers-reduced-motion: reduce) { .microphoneBreathing { animation: none; } }
+}
